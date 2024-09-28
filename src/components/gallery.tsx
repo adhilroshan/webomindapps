@@ -105,16 +105,34 @@ export default function EnhancedGallery() {
                             onHoverStart={() => handleCardHover(index)}
                             onHoverEnd={handleCardLeave}
                         >
-                            <Image
-                                src={(isRevealed && index === selectedImage) ? imageGallery2 : src}
-                                alt={`Gallery image ${index + 1}`}
-                                width={300}
-                                height={400}
-                                className="rounded-3xl transition-all duration-200 w-full h-full aspect-[3/4] shadow-lg"
-                            />
+                            <AnimatePresence>
+                                <motion.div
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1, transition: { duration: 0.5 } }}
+                                    exit={{ opacity: 0, transition: { duration: 0.5 } }}
+                                >
+                                    {(isRevealed && index === selectedImage) ? (
+                                        <Image
+                                            src={imageGallery2}
+                                            alt={`Gallery image ${index + 1}`}
+                                            width={300}
+                                            height={400}
+                                            className="rounded-3xl transition-all duration-200 w-full h-full aspect-[3/4] shadow-lg"
+                                        />
+                                    ) : (
+                                        <Image
+                                            src={src}
+                                            alt={`Gallery image ${index + 1}`}
+                                            width={300}
+                                            height={400}
+                                            className="rounded-3xl transition-all duration-200 w-full h-full aspect-[3/4] shadow-lg"
+                                        />
+                                    )}
+                                </motion.div>
+                            </AnimatePresence>
                             <AnimatePresence>
                                 {selectedImage === index && (
-                                    <div>
+                                    <>
                                         <motion.div
 
                                             initial={{ opacity: 0, x: 450, }}
@@ -127,14 +145,35 @@ export default function EnhancedGallery() {
                                             exit={{ opacity: 0, x: 450, transition: { duration: 0.1, delay: 0 } }}
 
                                             className=' absolute top-20   text-right items-end gap-4 flex flex-col w-[600px] text-black'>
-                                            <h1 className="text-5xl transition-all transform duration-200 text-black font-bold">
-                                                {isRevealed ?
-                                                    "Lorem ipsum dolor sit   insurance business in "
-                                                    :
-                                                    "Distribute and manage insurance business in "}
-                                                <span className="text-red-600">{isRevealed ? "amet, consectetur" : "one platform"}
-                                                </span>
-                                            </h1>
+                                            {isRevealed ?
+                                                (<motion.h1
+                                                    initial={{ opacity: 0, }}
+                                                    animate={{
+                                                        opacity: 1, transition: {
+                                                            delay: 0.45,
+                                                            stiffness: 150, duration: 0.5
+                                                        }
+                                                    }}
+                                                    className="text-5xl transition-all transform duration-200 text-black font-bold">
+                                                    {"Lorem ipsum dolor sit insurance business in "}
+
+                                                    <span className="text-red-600">{"amet, consectetur"}
+                                                    </span>
+                                                </motion.h1>) :
+                                                (<motion.h1
+                                                    initial={{ opacity: 0, }}
+                                                    animate={{
+                                                        opacity: 1, transition: {
+                                                            delay: 0.45,
+                                                            stiffness: 150, duration: 0.5
+                                                        }
+                                                    }}
+                                                    className="text-5xl transition-all transform duration-200 text-black font-bold">
+                                                    Distribute and manage insurance business in {' '}
+                                                    <span className="text-red-600">one platform
+                                                    </span>
+                                                </motion.h1>)
+                                            }
                                             <p className='w-96 float-right'>Manage your insurance business seamlessly using Riskcovry&apos;s assurance platform. Increase revenue, expand product offerings.</p>
                                             <Button text='Schedule Demo' icon />
                                         </motion.div>
@@ -144,7 +183,6 @@ export default function EnhancedGallery() {
                                                 opacity: 1, x: 250,
                                                 y: isRevealed ? -500 : -100,
                                                 transition: {
-                                                    delay: 0.45,
                                                     stiffness: 150, duration: 0.5
                                                 }
                                             }}
@@ -166,7 +204,6 @@ export default function EnhancedGallery() {
                                                 x: -150,
                                                 y: isRevealed ? -100 : -400,
                                                 transition: {
-                                                    delay: 0.45,
                                                     stiffness: 150, duration: 0.5
                                                 }
                                             }}
@@ -181,7 +218,7 @@ export default function EnhancedGallery() {
                                                 className="w-full h-full "
                                             />
                                         </motion.div>
-                                    </div>
+                                    </>
                                 )}
                             </AnimatePresence>
                         </motion.div>
